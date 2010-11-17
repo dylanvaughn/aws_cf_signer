@@ -4,10 +4,6 @@ Small gem for signing AWS CloudFront URLs given a AWS key_pair_id and pem file. 
 
 * http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html
 
-Signing code inspired by:
-
-* http://stackoverflow.com/questions/2632457/create-signed-urls-for-cloudfront-with-ruby
-
 == Usage
 
   signer = AwsCfSigner.new('/path/to/my/pk-12345.pem')
@@ -49,3 +45,16 @@ Signing code inspired by:
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
+
+== Attributions
+
+Parts of signing code taken from a question on Stack Overflow asked by Ben Wiseley, and answered by Blaz Lipuscek and Manual M:
+
+* http://stackoverflow.com/questions/2632457/create-signed-urls-for-cloudfront-with-ruby
+* http://stackoverflow.com/users/315829/ben-wiseley
+* http://stackoverflow.com/users/267804/blaz-lipuscek
+* http://stackoverflow.com/users/327914/manuel-m
+
+== License
+
+aws_cf_signer is distributed under the MIT License, copyright &copy; 2010 STL
