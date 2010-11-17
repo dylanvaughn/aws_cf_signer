@@ -4,7 +4,7 @@ require 'helper'
 class TestAwsCfSigner < Test::Unit::TestCase
   context "CloudFront Signing" do
     setup do
-      @cf_signer = AwsCfSigner.new(File.join(File.dirname(__FILE__), 'fixtures/pk-PK123456789754.pem'))
+      @cf_signer = AwsCfSigner.new(File.join(File.dirname(__FILE__), 'fixtures', 'pk-PK123456789754.pem'))
     end
 
     context "Initialization and Error Checking" do
@@ -36,14 +36,14 @@ class TestAwsCfSigner < Test::Unit::TestCase
     context "Custom Policies from files" do
       should "generate custom policy 1 correctly" do
         assert_equal(
-          @cf_signer.sign('http://d604721fxaaqy9.cloudfront.net/training/orientation.avi', :policy_file => File.join(File.dirname(__FILE__), 'fixtures/custom_policy1')), 
+          @cf_signer.sign('http://d604721fxaaqy9.cloudfront.net/training/orientation.avi', :policy_file => File.join(File.dirname(__FILE__), 'fixtures', 'custom_policy1')), 
           'http://d604721fxaaqy9.cloudfront.net/training/orientation.avi?Policy=eyAKICAgIlN0YXRlbWVudCI6IFt7IAogICAgICAiUmVzb3VyY2UiOiJodHRwOi8vZDYwNDcyMWZ4YWFxeTkuY2xvdWRmcm9udC5uZXQvdHJhaW5pbmcvKiIsIAogICAgICAiQ29uZGl0aW9uIjp7IAogICAgICAgICAiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjE0NS4xNjguMTQzLjAvMjQifSwgCiAgICAgICAgICJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTI1ODIzNzIwMH0gICAgICAKICAgICAgfSAKICAgfV0gCn0K&Signature=cPFtRKvUfYNYmxek6ZNs6vgKEZP6G3Cb4cyVt~FjqbHOnMdxdT7eT6pYmhHYzuDsFH4Jpsctke2Ux6PCXcKxUcTIm8SO4b29~1QvhMl-CIojki3Hd3~Unxjw7Cpo1qRjtvrimW0DPZBZYHFZtiZXsaPt87yBP9GWnTQoaVysMxQ_&Key-Pair-Id=PK123456789754'
           )
       end
 
       should "generate custom policy 2 correctly" do
         assert_equal(
-          @cf_signer.sign('http://d84l721fxaaqy9.cloudfront.net/downloads/pictures.tgz', :policy_file => File.join(File.dirname(__FILE__), 'fixtures/custom_policy2')), 
+          @cf_signer.sign('http://d84l721fxaaqy9.cloudfront.net/downloads/pictures.tgz', :policy_file => File.join(File.dirname(__FILE__), 'fixtures', 'custom_policy2')), 
           'http://d84l721fxaaqy9.cloudfront.net/downloads/pictures.tgz?Policy=eyAKICAgIlN0YXRlbWVudCI6IFt7IAogICAgICAiUmVzb3VyY2UiOiJodHRwOi8vKiIsIAogICAgICAiQ29uZGl0aW9uIjp7IAogICAgICAgICAiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjIxNi45OC4zNS4xLzMyIn0sCiAgICAgICAgICJEYXRlR3JlYXRlclRoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTI0MTA3Mzc5MH0sCiAgICAgICAgICJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTI1NTY3NDcxNn0KICAgICAgfSAKICAgfV0gCn0K&Signature=rc~5Qbbm8EJXjUTQ6Cn0LAxR72g1DOPrTmdtfbWVVgQNw0q~KHUAmBa2Zv1Wjj8dDET4XSL~Myh44CLQdu4dOH~N9huH7QfPSR~O4tIOS1WWcP~2JmtVPoQyLlEc8YHRCuN3nVNZJ0m4EZcXXNAS-0x6Zco2SYx~hywTRxWR~5Q_&Key-Pair-Id=PK123456789754'
           )
       end
