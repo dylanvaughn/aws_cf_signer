@@ -1,6 +1,40 @@
 = aws_cf_signer
 
-Description goes here.
+Small gem for signing AWS CloudFront URLs given a AWS key_pair_id and pem file.  Read more here:
+
+* http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html
+
+Signing code inspired by:
+
+* http://stackoverflow.com/questions/2632457/create-signed-urls-for-cloudfront-with-ruby
+
+== Usage
+
+  signer = AwsCfSigner.new('/path/to/my/pk-12345.pem')
+
+  # expiration date is required
+  # See Example Canned Policy at above AWS doc link
+  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', :until => 'Sat, 14 Nov 2009 22:20:00 GMT')
+
+  # You can also use a Time object
+  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', :until => Time.now + 1.day)
+
+  # Custom Policies
+
+  # See Example Custom Policy 1 at above AWS doc link
+  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', 
+    :until    => 'Sat, 14 Nov 2009 22:20:00 GMT',
+    :resource => 'http://d604721fxaaqy9.cloudfront.net/training/*',
+    :ip_range => '145.168.143.0/24'
+  )
+
+  # See Example Custom Policy 2 at above AWS doc link
+  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', 
+    :starting => 'Thu, 30 Apr 2009 06:43:10 GMT',
+    :until    => 'Fri, 16 Oct 2009 06:31:56 GMT',
+    :resource => 'http://*',
+    :ip_range => '216.98.35.1/32'
+  )
 
 == Note on Patches/Pull Requests
  
@@ -11,7 +45,3 @@ Description goes here.
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
-
-== Copyright
-
-Copyright (c) 2010 Dylan Vaughn. See LICENSE for details.

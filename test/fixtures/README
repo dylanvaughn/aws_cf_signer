@@ -1,0 +1,5 @@
+The example keys and policies are from this page:
+
+http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html
+
+renamed from private-key.pem and public-key.pem to reflect the normal way AWS names these keys.

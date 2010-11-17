@@ -1,0 +1,9 @@
+{ 
+   "Statement": [{ 
+      "Resource":"http://d604721fxaaqy9.cloudfront.net/training/*", 
+      "Condition":{ 
+         "IpAddress":{"AWS:SourceIp":"145.168.143.0/24"}, 
+         "DateLessThan":{"AWS:EpochTime":1258237200}      
+      } 
+   }] 
+}
