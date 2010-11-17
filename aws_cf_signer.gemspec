@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dylan Vaughn"]
   s.date = %q{2010-11-17}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Small gem for signing AWS CloudFront URLs given a AWS key_pair_id and pem file. Read more here: http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html}
   s.email = %q{dylan.vaughn@stlondemand.com}
   s.extra_rdoc_files = [
     "README.rdoc"
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "aws_cf_signer.gemspec",
      "lib/aws_cf_signer.rb",
      "test/fixtures/README",
      "test/fixtures/custom_policy1",
@@ -34,7 +35,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Ruby gem for signing AWS Cloudfront URLs for serving private content}
   s.test_files = [
     "test/helper.rb",
      "test/test_aws_cf_signer.rb"

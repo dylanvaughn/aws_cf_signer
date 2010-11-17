@@ -4,6 +4,10 @@ Small gem for signing AWS CloudFront URLs given a AWS key_pair_id and pem file. 
 
 * http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html
 
+== Installation
+
+  gem install aws_cf_signer
+
 == Usage
 
   # Pass in path to the private CloudFront key from AWS

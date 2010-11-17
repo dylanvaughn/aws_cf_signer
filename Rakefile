@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "aws_cf_signer"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Ruby gem for signing AWS Cloudfront URLs for serving private content}
+    gem.description = %Q{Small gem for signing AWS CloudFront URLs given a AWS key_pair_id and pem file. Read more here: http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/index.html?PrivateContent.html}
     gem.email = "dylan.vaughn@stlondemand.com"
     gem.homepage = "http://github.com/stlondemand/aws_cf_signer"
     gem.authors = ["Dylan Vaughn"]
