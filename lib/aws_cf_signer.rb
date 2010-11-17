@@ -15,22 +15,23 @@ class AwsCfSigner
     end
   end
 
-  def sign(resource, policy_options = {})
-    separator  = resource =~ /\?/ ? '&' : '?'
+  def sign(url_to_sign, policy_options = {})
+    separator = url_to_sign =~ /\?/ ? '&' : '?'
     if policy_options[:policy_file]
       policy = IO.read(policy_options[:policy_file])
-      "#{resource}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
+      "#{url_to_sign}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
     else
       raise ArgumentError.new("'ending' argument is required") if policy_options[:ending].nil?
       if policy_options.keys.size == 1
         # Canned Policy - shorter URL
         expires_at = epoch_time(policy_options[:ending])
-        policy = %({"Statement":[{"Resource":"#{resource}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
-        "#{resource}#{separator}Expires=#{expires_at}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
+        policy = %({"Statement":[{"Resource":"#{url_to_sign}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
+        "#{url_to_sign}#{separator}Expires=#{expires_at}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
       else
         # Custom Policy
+        resource = policy_options[:resource] || url_to_sign
         policy = generate_custom_policy(resource, policy_options)
-        "#{resource}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
+        "#{url_to_sign}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
       end
     end
   end
