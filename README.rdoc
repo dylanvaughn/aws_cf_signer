@@ -22,14 +22,14 @@ Signing code inspired by:
   # Custom Policies
 
   # See Example Custom Policy 1 at above AWS doc link
-  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', 
+  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/training/orientation.avi',
     :until    => 'Sat, 14 Nov 2009 22:20:00 GMT',
     :resource => 'http://d604721fxaaqy9.cloudfront.net/training/*',
     :ip_range => '145.168.143.0/24'
   )
 
   # See Example Custom Policy 2 at above AWS doc link
-  url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', 
+  url = signer.sign('http://d84l721fxaaqy9.cloudfront.net/downloads/pictures.tgz',
     :starting => 'Thu, 30 Apr 2009 06:43:10 GMT',
     :until    => 'Fri, 16 Oct 2009 06:31:56 GMT',
     :resource => 'http://*',
