@@ -36,6 +36,10 @@ Signing code inspired by:
     :ip_range => '216.98.35.1/32'
   )
 
+  # You can also pass in a path to a policy file
+  # This will supersede any other policy options
+  url = signer.sign('http://d84l721fxaaqy9.cloudfront.net/downloads/pictures.tgz', :policy_file => '/path/to/policy/file.txt')
+
 == Note on Patches/Pull Requests
  
 * Fork the project.

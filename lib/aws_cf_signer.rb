@@ -15,20 +15,47 @@ class AwsCfSigner
     end
   end
 
-  def sign(url, policy_options = {})
-    if policy_options[:until]
-      expires_at = case policy_options[:until]
-                   when String then Time.parse(policy_options[:until]).to_i
-                   when Time   then policy_options[:until].to_i
-                   else raise ArgumentError.new("Invalid 'until' argument' - String or Time required - #{policy_options[:until].class} passed.")
-                   end
-      policy     = %({"Statement":[{"Resource":"#{url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
-      sig        = url_safe(Base64.encode64(@key.sign(OpenSSL::Digest::SHA1.new, (policy))))
-      separator  = url =~ /\?/ ? '&' : '?'
-      "#{url}#{separator}Expires=#{expires_at}&Signature=#{sig}&Key-Pair-Id=#{@key_pair_id}"
+  def sign(resource, policy_options = {})
+    separator  = resource =~ /\?/ ? '&' : '?'
+    if policy_options[:policy_file]
+      policy = IO.read(policy_options[:policy_file])
+      "#{resource}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
     else
-      raise ArgumentError.new("'until' argument is required")
+      raise ArgumentError.new("'ending' argument is required") if policy_options[:ending].nil?
+      if policy_options.keys.size == 1
+        # Canned Policy - shorter URL
+        expires_at = epoch_time(policy_options[:ending])
+        policy = %({"Statement":[{"Resource":"#{resource}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
+        "#{resource}#{separator}Expires=#{expires_at}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
+      else
+        # Custom Policy
+        policy = generate_custom_policy(resource, policy_options)
+        "#{resource}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
+      end
     end
+  end
+
+  def generate_custom_policy(resource, options)
+    conditions = ["\"DateLessThan\":{\"AWS:EpochTime\":#{epoch_time(options[:ending])}}"]
+    conditions << "\"DateGreaterThan\":{\"AWS:EpochTime\":#{epoch_time(options[:starting])}}" if options[:starting]
+    conditions << "\"IpAddress\":{\"AWS:SourceIp\":#{options[:ip_range]}" if options[:ip_range]
+    %({"Statement":[{"Resource":"#{resource}","Condition":{#{conditions.join(',')}}}]})
+  end
+
+  def epoch_time(timelike)
+    case timelike
+    when String then Time.parse(timelike).to_i
+    when Time   then timelike.to_i
+    else raise ArgumentError.new("Invalid argument - String or Time required - #{timelike.class} passed.")
+    end
+  end
+
+  def encode_policy(policy)
+    url_safe(Base64.encode64(policy))
+  end
+
+  def create_signature(policy)
+    url_safe(Base64.encode64(@key.sign(OpenSSL::Digest::SHA1.new, (policy))))
   end
 
   def extract_key_pair_id(key_path)
