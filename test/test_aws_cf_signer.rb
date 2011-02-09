@@ -56,9 +56,10 @@ class TestAwsCfSigner < Test::Unit::TestCase
         ip_range = '216.98.35.1/32'
         assert_equal(
           @cf_signer.generate_custom_policy('http://d84l721fxaaqy9.cloudfront.net/downloads/*', :starting => starting, :ending => ending, :ip_range => ip_range),
-          %({"Statement":[{"Resource":"http://d84l721fxaaqy9.cloudfront.net/downloads/*","Condition":{"DateLessThan":{"AWS:EpochTime":#{ending.to_i}},"DateGreaterThan":{"AWS:EpochTime":#{starting.to_i}},"IpAddress":{"AWS:SourceIp":#{ip_range}}}]})
+          %({"Statement":[{"Resource":"http://d84l721fxaaqy9.cloudfront.net/downloads/*","Condition":{"DateLessThan":{"AWS:EpochTime":#{ending.to_i}},"DateGreaterThan":{"AWS:EpochTime":#{starting.to_i}},"IpAddress":{"AWS:SourceIp":"#{ip_range}"}}}]})
           )
       end
+
     end
 
   end
