@@ -22,10 +22,10 @@ class AwsCfSigner
       "#{url_to_sign}#{separator}Policy=#{encode_policy(policy)}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
     else
       raise ArgumentError.new("'ending' argument is required") if policy_options[:ending].nil?
-      if policy_options.keys.size == 1
+      if policy_options.keys == [:ending] || policy_options.keys.sort == [:ending, :resource]
         # Canned Policy - shorter URL
         expires_at = epoch_time(policy_options[:ending])
-        policy = %({"Statement":[{"Resource":"#{url_to_sign}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
+        policy = %({"Statement":[{"Resource":"#{policy_options[:resource] || url_to_sign}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]})
         "#{url_to_sign}#{separator}Expires=#{expires_at}&Signature=#{create_signature(policy)}&Key-Pair-Id=#{@key_pair_id}"
       else
         # Custom Policy
