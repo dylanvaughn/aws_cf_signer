@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.name        = "aws_cf_signer"
   s.version     = AwsCfSigner::VERSION
   s.authors     = ["Dylan Vaughn"]
-  s.email       = ["dylan.vaughn@stlondemand.com"]
-  s.homepage    = "https://github.com/stlondemand/aws_cf_signer?source=c"
+  s.email       = ["dylancvaughn@gmail.com"]
+  s.homepage    = "https://github.com/dylanvaughn/aws_cf_signer"
   s.summary     = "Ruby gem for signing AWS Cloudfront URLs for serving private content."
 
   s.add_development_dependency("rake", "~> 10.1")

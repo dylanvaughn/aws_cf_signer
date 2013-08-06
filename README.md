@@ -76,4 +76,4 @@ Parts of signing code taken from a question on Stack Overflow asked by Ben Wisel
 
 ## License
 
-aws_cf_signer is distributed under the MIT License, copyright © 2010 STL
+aws_cf_signer is distributed under the MIT License, copyright © 2010 STL, Dylan Vaughn
