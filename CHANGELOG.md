@@ -1,4 +1,8 @@
 
+## Unreleased
+
+* Fixed issues with rake release
+
 ## 0.1.2 (2013/08/06)
 
 * Update dev environment and use 0.0.0.0/0 as IP range if none given (@dbackeus)
