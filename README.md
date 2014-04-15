@@ -22,6 +22,9 @@ signer = AwsCfSigner.new('/path/to/my/pk-1234567890.pem')
 # If the key filename doesn't contain the key_pair_id (as it usually does from AWS), pass that in as the second arg
 signer = AwsCfSigner.new('/path/to/my/private-key.pem', '1234567890')
 
+# If your private key is not on the filesystem, you can pass it explicitly, you need to pass key_pair_id if you do that
+signer = AwsCfSigner.new(ENV["CLOUDFLARE_PRIVATE_KEY"], '1234567890')
+
 # expiration date is required
 # See Example Canned Policy at above AWS doc link
 url = signer.sign('http://d604721fxaaqy9.cloudfront.net/horizon.jpg?large=yes&license=yes', :ending => 'Sat, 14 Nov 2009 22:20:00 GMT')
