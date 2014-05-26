@@ -1,7 +1,10 @@
 
 ## Unreleased
 
+## 0.1.3 (2014/05/26)
+
 * Fixed issues with rake release
+* Added support for passing in key contents (@ConradIrwin)
 
 ## 0.1.2 (2013/08/06)
 
