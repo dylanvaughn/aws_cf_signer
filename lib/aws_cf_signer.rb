@@ -6,12 +6,17 @@ class AwsCfSigner
 
   attr_reader :key_pair_id
 
-  def initialize(pem_path, key_pair_id = nil)
-    @pem_path    = pem_path
-    @key         = OpenSSL::PKey::RSA.new(File.readlines(@pem_path).join(""))
-    @key_pair_id = key_pair_id ? key_pair_id : extract_key_pair_id(@pem_path)
-    unless @key_pair_id
-      raise ArgumentError.new("key_pair_id couldn't be inferred from #{@pem_path} - please pass in explicitly")
+  def initialize(key_or_pem_path, key_pair_id = nil)
+    if key_or_pem_path =~ /BEGIN RSA PRIVATE KEY/
+      @key = OpenSSL::PKey::RSA.new(key_or_pem_path)
+      @key_pair_id = key_pair_id or raise ArgumentError, "key_pair_id could not be inferred - please pass in explicitly"
+    else
+      @pem_path    = key_or_pem_path
+      @key         = OpenSSL::PKey::RSA.new(File.readlines(@pem_path).join(""))
+      @key_pair_id = key_pair_id ? key_pair_id : extract_key_pair_id(@pem_path)
+      unless @key_pair_id
+        raise ArgumentError.new("key_pair_id couldn't be inferred from #{@pem_path} - please pass in explicitly")
+      end
     end
   end
 

@@ -4,10 +4,20 @@ require 'helper'
 class TestAwsCfSigner < Test::Unit::TestCase
   context "CloudFront Signing" do
     setup do
+      @key = File.read(File.join(File.dirname(__FILE__), 'fixtures', 'pk-PK123456789754.pem'))
       @cf_signer = AwsCfSigner.new(File.join(File.dirname(__FILE__), 'fixtures', 'pk-PK123456789754.pem'))
     end
 
     context "Initialization and Error Checking" do
+      should "be able to extract the key from a file" do
+        assert_equal @cf_signer.instance_variable_get(:@key).to_s, OpenSSL::PKey::RSA.new(@key).to_s
+      end
+
+      should "be able to tell you the explicit private key" do
+        signer = AwsCfSigner.new(@key, 'PK123456789754')
+        assert_equal signer.instance_variable_get(:@key).to_s, OpenSSL::PKey::RSA.new(@key).to_s
+      end
+
       should "be able to extract the key pair id from the filename of a key straight from AWS" do
         assert_equal @cf_signer.extract_key_pair_id('/path/to/my/key/pk-THEKEYID.pem'), 'THEKEYID'
       end
