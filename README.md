@@ -23,7 +23,7 @@ signer = AwsCfSigner.new('/path/to/my/pk-1234567890.pem')
 signer = AwsCfSigner.new('/path/to/my/private-key.pem', '1234567890')
 
 # If your private key is not on the filesystem, you can pass it explicitly, you need to pass key_pair_id if you do that
-signer = AwsCfSigner.new(ENV["CLOUDFLARE_PRIVATE_KEY"], '1234567890')
+signer = AwsCfSigner.new(ENV["CLOUDFRONT_PRIVATE_KEY"], '1234567890')
 
 # expiration date is required
 # See Example Canned Policy at above AWS doc link
