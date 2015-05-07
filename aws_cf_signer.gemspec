@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["dylancvaughn@gmail.com"]
   s.homepage    = "https://github.com/dylanvaughn/aws_cf_signer"
   s.summary     = "Ruby gem for signing AWS Cloudfront URLs for serving private content."
+  s.license     = "MIT"
 
   s.add_development_dependency("rake", "~> 10.1")
   s.add_development_dependency("thoughtbot-shoulda", "~> 2.11")
