@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.add_development_dependency("rake", "~> 10.1")
+  s.add_development_dependency("test-unit", "~> 3.0")
   s.add_development_dependency("thoughtbot-shoulda", "~> 2.11")
   s.add_development_dependency("yard", "~> 0.8")
 
