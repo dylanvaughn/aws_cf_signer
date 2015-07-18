@@ -79,5 +79,17 @@ class TestAwsCfSigner < Test::Unit::TestCase
       end
     end
 
+    context "can_use_canned_policy?" do
+      should "use canned policy if specific resource and ending time is given" do
+        ending = Time.new('2100-01-01')
+        assert_true(@cf_signer.can_use_canned_policy?('http://d84l721fxaaqy9.cloudfront.net/downloads/file.txt', :ending => ending))
+      end
+
+      should "use custom policy if wildcard resource and ending time is given" do
+        ending = Time.new('2100-01-01')
+        assert_false(@cf_signer.can_use_canned_policy?('http://d84l721fxaaqy9.cloudfront.net/downloads/*', :ending => ending))
+      end
+    end
+
   end
 end
